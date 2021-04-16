@@ -1,13 +1,17 @@
-qpcr_plate_3 <- read.table("D:/work/haru/HK099_4/admin_2021-04-09 15-09-46_CC008578 bQ2 -  End Point Results-2.txt", sep = "\t", header = TRUE)
+#the input has to be a csv file obtained by the conversion of an excel file
 
-rows <- qpcr_plate_3[,2]
-rfu <- qpcr_plate_3[,7]
+qpcr_plate <- read.table("test.csv", header = TRUE, sep = ";")
+
+rows <- qpcr_plate[,2]
+rfu <- qpcr_plate[,7]
+
+rfu <- as.numeric(gsub(",", ".", gsub("\\.", "", rfu))) # the commas in the rfu vector have to be replace by dot and then transformed in numeric
 
 df <- data.frame(matrix(ncol = length(rows), nrow = 0))
 df <- rbind(df, rfu)
 colnames(df) <- rows
 
-hist(t(df))
+hist(t(df)) 
 
 qpcr_plate_t <- cbind(t(df), row.names(t(df))) # transpose the df (columns become rows and viceversa). Attach a new column with the well name
 qpcr_plate_t <- cbind(qpcr_plate_t, gsub("^[[:upper:]]","" , qpcr_plate_t[,2])) # add new column with the well number (from 1 to 24)
