@@ -1,5 +1,6 @@
 #the input has to be a csv file obtained by the conversion of an excel file
 
+
 qpcr_plate <- read.table("test.csv", header = TRUE, sep = ";")
 
 rows <- qpcr_plate[,2]
